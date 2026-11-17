@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex,nofollow">
+<title>Conectando…</title>
+<style>body{font-family:system-ui,sans-serif;color:#231e1c;background:#f5f2ea;display:grid;place-items:center;min-height:100vh;margin:0}p{font-size:16px}</style>
+</head>
+<body>
+<p>Conectando ao Google, aguarde…</p>
+<script>
+// Ponte do Conector Ative: o Google devolve o login aqui; repassamos SÓ state/code/error ao conector.
+// (O firewall da hospedagem do conector bloqueia o parâmetro "iss=https://..." que o Google acrescenta.)
+(function () {
+  var entrada = new URLSearchParams(location.search), saida = new URLSearchParams();
+  ['state', 'code', 'error'].forEach(function (k) { var v = entrada.get(k); if (v) { saida.set(k, v); } });
+  if (!saida.get('state')) { document.querySelector('p').textContent = 'Retorno do Google inválido. Feche esta janela e tente de novo.'; return; }
+  location.replace('https://conectar.vscadvocacia.com.br/retorno.php?' + saida.toString());
+})();
+</script>
+</body>
+</html>
